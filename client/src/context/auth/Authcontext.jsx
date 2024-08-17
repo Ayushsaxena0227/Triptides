@@ -1,7 +1,8 @@
 import React, { createContext, useReducer } from "react";
 // import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import { useState } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const AuthContext = createContext();
 
@@ -40,36 +41,41 @@ const authReducer = (state, action) => {
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
-  // const [user, setUser] = useState(null);e
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const token = localStorage.getItem("token");
-  //       console.log("Token being sent:", token); // Debugging
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        console.log("Token being sent:", token); // Debugging
 
-  //       const response = await fetch("http://localhost:5000/api/users/user", {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           "x-auth-token": token,
-  //         },
-  //       });
+        if (!token) {
+          throw new Error("No token found");
+        }
 
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch user");
-  //       }
+        const response = await fetch("http://localhost:5000/api/users/user", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": token, // Ensure this matches your backend header name
+          },
+        });
 
-  //       const data = await response.json();
-  //       setUser(data);
-  //     } catch (error) {
-  //       console.error("Error fetching user:", error);
-  //     }
-  //   };
+        if (!response.ok) {
+          throw new Error("Failed to fetch user");
+        }
 
-  //   fetchUser();
-  // }, []);
+        const data = await response.json();
+        setUser(data);
+        console.log("Fetched user:", data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const login = (user, token) => {
     localStorage.setItem("token", token);
@@ -88,7 +94,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ ...state, login, logout }}>
+    <AuthContext.Provider value={{ ...state, login, logout, user }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,4 +1,5 @@
 const Booking = require("../models/Booking");
+const User = require("../models/User");
 const Flight = require("../models/Flight");
 
 exports.bookFlight = async (req, res) => {
@@ -33,12 +34,13 @@ exports.bookFlight = async (req, res) => {
 };
 
 // Get User's Bookings
-exports.getBookings = async (req, res) => {
+exports.getUser = async (req, res) => {
   try {
-    const bookings = await Booking.find({ userId: req.user.id }).populate(
-      "flightId"
-    );
-    res.json({ data: bookings });
+    const user = await User.findById(req.user.id); // Ensure User model is correct
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.json(user);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");

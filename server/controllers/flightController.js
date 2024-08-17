@@ -1,4 +1,5 @@
 const Flight = require("../models/Flight");
+const Booking = require("../models/Booking");
 
 exports.searchFlights = async (req, res) => {
   const { departure, arrival, departureDate, adults } = req.query;

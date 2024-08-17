@@ -6,7 +6,11 @@ const FlightSchema = new mongoose.Schema({
   departureDate: Date,
   availableTickets: Number,
   price: Number,
-  // Add more fields as needed
+  // image: {
+  //   type: String,
+  //   required: true,
+  //   default: "", // Replace with your default image URL
+  // },
 });
 
 const Flight = mongoose.model("Flight", FlightSchema);

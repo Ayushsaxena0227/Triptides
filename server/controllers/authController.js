@@ -88,11 +88,12 @@ exports.login = async (req, res) => {
 
 // New controller to get user data
 exports.getUser = async (req, res) => {
+  console.log("getUser endpoint hit, user:", req.user); // Log user info to check if it's being set correctly
   try {
     const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (error) {
-    console.error(error.message);
+    console.error("Error in getUser:", error.message); // Log error messages
     res.status(500).send("Server Error");
   }
 };

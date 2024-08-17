@@ -6,7 +6,8 @@ import Navbar from "./components/Navbar";
 import FlightSearch from "./components/FlightSearch";
 import Home from "./components/Home";
 import Services from "./components/Services";
-import { ToastContainer } from "react-toastify";
+import BookingDetails from "./components/Bookingdetails";
+// import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
@@ -18,8 +19,9 @@ const App = () => {
         <Route path="/search" element={<FlightSearch />} />
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/bookingdetails" element={<BookingDetails />} />
       </Routes>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   );
 };
