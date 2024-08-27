@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/auth/Authcontext";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import Modal from "../components/Modal";
 import "./styles/Register.css";
 
 const Register = () => {
@@ -10,6 +10,9 @@ const Register = () => {
     email: "",
     password: "",
   });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const { name, email, password } = user;
   const { setIsAuthenticated } = useContext(AuthContext);
@@ -31,20 +34,26 @@ const Register = () => {
       const res_data = await response.json();
       if (response.ok) {
         localStorage.setItem("token", res_data.token);
-        toast.success("Registration successful! Please log in.");
-        navigate("/login");
+        setModalMessage("Registration successful! Please log in.");
+        setIsModalOpen(true);
+        setTimeout(() => navigate("/login"), 2000); // Delay navigation for modal visibility
       } else {
-        toast.error(res_data.message);
+        setModalMessage(res_data.message);
+        setIsModalOpen(true);
       }
     } catch (err) {
       console.error("Error response:", err.response);
-      toast.error("An error occurred. Please try again.");
+      setModalMessage("An error occurred. Please try again.");
+      setIsModalOpen(true);
     }
   };
 
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <div className="register-container">
-      <h1>Register</h1>
+      <h1>Register And</h1>
+      <h2>Fly High With Us!</h2>
       <form onSubmit={onSubmit}>
         <input
           type="text"
@@ -72,6 +81,7 @@ const Register = () => {
         />
         <input type="submit" value="Register" />
       </form>
+      <Modal isOpen={isModalOpen} onClose={closeModal} message={modalMessage} />
     </div>
   );
 };

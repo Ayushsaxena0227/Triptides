@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 
+/* FlightSearch.css */
 .flight-search-container {
   display: flex;
   flex-direction: column;
@@ -7,7 +8,6 @@
   justify-content: center;
   height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  font-family: "Montserrat", sans-serif;
   padding: 20px;
 }
 
@@ -62,8 +62,7 @@ input[type="submit"]:hover,
 .search-button:hover {
   background: #2980b9;
 }
-
-.flight-results {
+results {
   margin-top: 20px;
   width: 100%;
   max-width: 800px;
@@ -120,6 +119,29 @@ input[type="submit"]:hover,
 
 .flight-results button:hover {
   background: #218838;
+}
+/* FlightSearch.css */
+.no-flights-found {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.no-flights-found h2 {
+  color: black;
+  margin-bottom: 20px;
+}
+
+.search-again-button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-again-button:hover {
+  background-color: #2980b9;
 }
 
 @media (max-width: 600px) {

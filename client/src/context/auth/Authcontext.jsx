@@ -43,12 +43,11 @@ const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
-        console.log("Token being sent:", token); // Debugging
+        console.log("Token being sent:", token);
 
         if (!token) {
           throw new Error("No token found");
@@ -58,7 +57,7 @@ const AuthProvider = ({ children }) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "x-auth-token": token, // Ensure this matches your backend header name
+            "x-auth-token": token, // This should match the backend header name
           },
         });
 
@@ -68,12 +67,18 @@ const AuthProvider = ({ children }) => {
 
         const data = await response.json();
         setUser(data);
+
+        // Dispatch user data to the context
+        dispatch({
+          type: "SET_USER",
+          payload: data, // Assuming 'data' contains the user object
+        });
+
         console.log("Fetched user:", data);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
     };
-
     fetchUser();
   }, []);
 

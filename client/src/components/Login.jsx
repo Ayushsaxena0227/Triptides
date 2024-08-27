@@ -2,17 +2,19 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/auth/Authcontext";
 import "./styles/Login.css";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import Modal from "../components/Modal";
+
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
   const { email, password } = user;
-
   const { login } = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
@@ -36,15 +38,21 @@ const Login = () => {
       if (res_data.token) {
         localStorage.setItem("token", res_data.token);
         login(res_data.user, res_data.token); // Pass user and token to login
-        navigate("/search");
-        toast.success("Login successful!");
+        setModalMessage("Login successful! Redirecting...");
+        setIsModalOpen(true);
+        setTimeout(() => navigate("/search"), 2000); // Delay navigation for modal visibility
       } else {
-        console.error("Login failed: No token received");
+        setModalMessage("Login failed. Please try again.");
+        setIsModalOpen(true);
       }
     } catch (err) {
       console.error(err.message);
+      setModalMessage("An error occurred. Please try again.");
+      setIsModalOpen(true);
     }
   };
+
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className="login-container">
@@ -68,6 +76,7 @@ const Login = () => {
         />
         <input type="submit" value="Login" />
       </form>
+      <Modal isOpen={isModalOpen} onClose={closeModal} message={modalMessage} />
     </div>
   );
 };

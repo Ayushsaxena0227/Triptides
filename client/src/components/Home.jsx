@@ -21,19 +21,25 @@ const Home = () => {
         <h2>Featured Destinations</h2>
         <div className="destination-cards">
           <div className="destination-card">
-            <img src="/images/paris.jpg" alt="Paris" />
-            <h3>Paris</h3>
-            <p>Explore the City of Lights.</p>
+            <Link to="/paris">
+              <img src="/images/paris.jpg" alt="Paris" />
+              <h3>Paris</h3>
+              <p>Explore the City of Lights.</p>
+            </Link>
           </div>
           <div className="destination-card">
-            <img src="/images/newyork.jpg" alt="New York" />
-            <h3>New York</h3>
-            <p>The city that never sleeps.</p>
+            <Link to="/newyork">
+              <img src="/images/newyork.jpg" alt="New York" />
+              <h3>New York</h3>
+              <p>The city that never sleeps.</p>
+            </Link>
           </div>
           <div className="destination-card">
-            <img src="/images/tokyo.jpg" alt="Tokyo" />
-            <h3>Tokyo</h3>
-            <p>Experience the vibrant culture of Japan.</p>
+            <Link to="/tokyo">
+              <img src="/images/tokyo.jpg" alt="Tokyo" />
+              <h3>Tokyo</h3>
+              <p>Experience the vibrant culture of Japan.</p>
+            </Link>
           </div>
         </div>
       </section>

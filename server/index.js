@@ -5,6 +5,7 @@ const authRoutes = require("./routes/authRoutes");
 const flightRoutes = require("./routes/flightRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const bodyParser = require("body-parser");
+const paypalRoutes = require("./routes/paypalRoutes");
 
 dotenv.config();
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/api/users", authRoutes);
 app.use("/api/flights", flightRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/paypal", paypalRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

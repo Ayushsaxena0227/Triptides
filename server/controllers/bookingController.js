@@ -34,13 +34,12 @@ exports.bookFlight = async (req, res) => {
 };
 
 // Get User's Bookings
-exports.getUser = async (req, res) => {
+// Change `getUser` to `getBookings`
+exports.getBookings = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id); // Ensure User model is correct
-    if (!user) {
-      return res.status(404).json({ msg: "User not found" });
-    }
-    res.json(user);
+    // Fetch bookings related to the user
+    const bookings = await Booking.find({ user: req.user.id });
+    res.json(bookings);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
